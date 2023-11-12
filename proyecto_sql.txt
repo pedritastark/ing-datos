@@ -1,0 +1,665 @@
+CREATE TABLE Caso (
+    codigo_caso numeric(10),
+    codigo_crimen numeric(10),
+    locacion character varying(50),
+    codigo_arma numeric(10),
+    codigo_delito numeric(10),
+    codigo_premisa numeric(10),
+    estado_crimen character varying(50),
+    codigo_area numeric(10),
+    PRIMARY KEY (codigo_caso)
+);
+
+CREATE TABLE Estado (
+    estado_crimen character varying(50),
+    descripcion_estado character varying,
+    PRIMARY KEY (estado_crimen)
+);
+
+create table Area
+(
+	codigo_area numeric(10),
+	nombre character varying,
+	primary key(codigo_area)
+);
+
+
+create table Crimen
+(
+	codigo_crimen numeric(10),
+	descripcion character varying not null,
+	primary key(codigo_crimen)
+);
+
+create table Arma
+(
+	codigo_arma numeric(10),
+	arma_usada character varying not null,
+	primary key(codigo_arma)
+);
+
+create table Premisa
+(
+	codigo_premisa numeric(10),
+	descripcion character varying not null,
+	primary key(codigo_premisa)
+);
+
+create table Ubicacion
+(
+	locacion character varying (50),
+	direccion character varying,
+	latitud numeric,
+	longitud numeric,	
+	codigo_distrito numeric(10) not null,
+	primary key(locacion)
+);
+
+
+create table Delito
+(
+	codigo_delito numeric(10),
+	codigo_descripcion character varying not null,
+	primary key(codigo_delito)
+);
+
+create table Delito_asociado
+(
+	codigo_delito_asociado numeric (50),
+	codigo_distrito numeric(10) not null,
+	direccion character varying not null,
+	latitud numeric not null,
+	longitud numeric not null,	
+	primary key(codigo_delito_asociado)
+);
+
+create table Victima
+
+(
+	codigo_caso numeric(10),
+	sexo_victima character varying not null,
+	edad_victima numeric(10) not null,
+	descendencia_victima character varying not null
+);
+
+select * from Estado
+
+insert into Estado values('AO','Adult Other');
+insert into Estado values('IC','Invest Cont');
+insert into Estado values('AA','Adult Arrest');
+insert into Estado values('JA','Juv Arrest');
+insert into Estado values('JO','Juv Other');
+insert into Estado values('CC','UNK');
+
+
+select * from Area
+
+insert into  Area values(3,'Southwest');
+insert into  Area values(1,'Central');
+insert into  Area values(15,'N Hollywood');
+insert into  Area values(19,'Mission');
+insert into  Area values(17,'Devonshire');
+insert into  Area values(11,'Northeast');
+insert into  Area values(5,'Harbor');
+insert into  Area values(9,'Van Nuys');
+insert into  Area values(10,'West Valley');
+insert into  Area values(8,'West LA');
+insert into  Area values(7,'Wilshire');
+insert into  Area values(14,'Pacific');
+insert into  Area values(2,'Rampart');
+insert into  Area values(12,'77th Street');
+insert into  Area values(4,'Hollenbeck');
+insert into  Area values(18,'Southeast');
+insert into  Area values(6,'Hollywood');
+insert into  Area values(13,'Newton');
+insert into  Area values(21,'Topanga');
+insert into  Area values(16,'Foothill');
+insert into  Area values(20,'Olympic');
+
+select * from Arma
+insert into  Arma values(400,'STRONG-ARM (HANDS, FIST, FEET OR BODILY FORCE)');
+insert into  Arma values(500,'UNKNOWN WEAPON/OTHER WEAPON');
+insert into  Arma values(306,'ROCK/THROWN OBJECT');
+insert into  Arma values(511,'VERBAL THREAT');
+insert into  Arma values(204,'FOLDING KNIFE');
+insert into  Arma values(302,'BLUNT INSTRUMENT');
+insert into  Arma values(212,'BOTTLE');
+insert into  Arma values(109,'SEMI-AUTOMATIC PISTOL');
+insert into  Arma values(304,'CLUB/BAT');
+insert into  Arma values(218,'OTHER CUTTING INSTRUMENT');
+insert into  Arma values(102,'HAND GUN');
+insert into  Arma values(515,'PHYSICAL PRESENCE');
+insert into  Arma values(307,'VEHICLE');
+insert into  Arma values(216,'SCISSORS');
+insert into  Arma values(308,'STICK');
+insert into  Arma values(215,'MACHETE');
+insert into  Arma values(207,'OTHER KNIFE');
+insert into  Arma values(104,'SHOTGUN');
+insert into  Arma values(200,'KNIFE WITH BLADE 6INCHES OR LESS');
+insert into  Arma values(506,'FIRE');
+insert into  Arma values(214,'ICE PICK');
+insert into  Arma values(221,'GLASS');
+insert into  Arma values(113,'SIMULATED GUN');
+insert into  Arma values(201,'KNIFE WITH BLADE OVER 6 INCHES IN LENGTH');
+insert into  Arma values(504,'DEMAND NOTE');
+insert into  Arma values(501,'BOMB THREAT');
+insert into  Arma values(312,'PIPE/METAL PIPE');
+insert into  Arma values(106,'UNKNOWN FIREARM');
+insert into  Arma values(512,'MACE/PEPPER SPRAY');
+insert into  Arma values(311,'HAMMER');
+insert into  Arma values(208,'RAZOR');
+insert into  Arma values(107,'OTHER FIREARM');
+insert into  Arma values(301,'BELT FLAILING INSTRUMENT/CHAIN');
+insert into  Arma values(223,'UNKNOWN TYPE CUTTING INSTRUMENT');
+insert into  Arma values(219,'SCREWDRIVER');
+insert into  Arma values(205,'KITCHEN KNIFE');
+insert into  Arma values(114,'AIR PISTOL/REVOLVER/RIFLE/BB GUN');
+insert into  Arma values(303,'BRASS KNUCKLES');
+insert into  Arma values(101,'REVOLVER');
+insert into  Arma values(206,'SWITCH BLADE');
+insert into  Arma values(513,'STUN GUN');
+insert into  Arma values(211,'AXE');
+insert into  Arma values(103,'RIFLE');
+insert into  Arma values(115,'ASSAULT WEAPON/UZI/AK47/ETC');
+insert into  Arma values(116,'ANTIQUE FIREARM');
+insert into  Arma values(305,'FIXED OBJECT');
+insert into  Arma values(110,'SEMI-AUTOMATIC RIFLE');
+insert into  Arma values(503,'CAUSTIC CHEMICAL/POISON');
+insert into  Arma values(514,'TIRE IRON');
+insert into  Arma values(508,'MARTIAL ARTS WEAPONS');
+insert into  Arma values(310,'CONCRETE BLOCK/BRICK');
+insert into  Arma values(309,'BOARD');
+insert into  Arma values(203,'DIRK/DAGGER');
+insert into  Arma values(112,'TOY GUN');
+insert into  Arma values(122,'HECKLER & KOCH 93 SEMIAUTOMATIC ASSAULT RIFLE');
+insert into  Arma values(120,'MAC-11 SEMIAUTOMATIC ASSAULT WEAPON');
+insert into  Arma values(505,'EXPLOXIVE DEVICE');
+insert into  Arma values(105,'SAWED OFF RIFLE/SHOTGUN');
+insert into  Arma values(516,'DOG/ANIMAL (SIC ANIMAL ON)');
+insert into  Arma values(220,'SYRINGE');
+insert into  Arma values(510,'SCALDING LIQUID');
+insert into  Arma values(210,'RAZOR BLADE');
+insert into  Arma values(213,'CLEAVER');
+insert into  Arma values(509,'ROPE/LIGATURE');
+insert into  Arma values(502,'BOW AND ARROW');
+insert into  Arma values(108,'AUTOMATIC WEAPON/SUB-MACHINE GUN');
+insert into  Arma values(507,'LIQUOR/DRUGS');
+insert into  Arma values(217,'SWORD');
+insert into  Arma values(123,'M1-1 SEMIAUTOMATIC ASSAULT RIFLE');
+insert into  Arma values(111,'STARTER PISTOL/REVOLVER');
+insert into  Arma values(119,'MAC-10 SEMIAUTOMATIC ASSAULT WEAPON');
+insert into  Arma values(202,'BOWIE KNIFE');
+insert into  Arma values(209,'STRAIGHT RAZOR');
+insert into  Arma values(300,'BLACKJACK');
+insert into  Arma values(125,'RELIC FIREARM');
+insert into  Arma values(121,'HECKLER & KOCH 91 SEMIAUTOMATIC ASSAULT RIFLE');
+insert into  Arma values(118,'UZI SEMIAUTOMATIC ASSAULT RIFLE');
+insert into  Arma values(117,'UNK TYPE SEMIAUTOMATIC ASSAULT RIFLE');
+insert into  Arma values(124,'M-14 SEMIAUTOMATIC ASSAULT RIFLE');
+
+select * from Premisa
+
+insert into  Premisa values(501,'SINGLE FAMILY DWELLING');
+insert into  Premisa values(102,'SIDEWALK');
+insert into  Premisa values(726,'POLICE FACILITY');
+insert into  Premisa values(502,'MULTI-UNIT DWELLING (APARTMENT, DUPLEX, ETC)');
+insert into  Premisa values(409,'BEAUTY SUPPLY STORE');
+insert into  Premisa values(735,'NIGHT CLUB (OPEN EVENINGS ONLY)');
+insert into  Premisa values(404,'DEPARTMENT STORE');
+insert into  Premisa values(203,'OTHER BUSINESS');
+insert into  Premisa values(101,'STREET');
+insert into  Premisa values(108,'PARKING LOT');
+insert into  Premisa values(503,'HOTEL');
+insert into  Premisa values(252,'COFFEE SHOP (STARBUCKS, COFFEE BEAN, PEETs, ETC.)');
+insert into  Premisa values(103,'ALLEY');
+insert into  Premisa values(507,'CONDOMINIUM/TOWNHOUSE');
+insert into  Premisa values(148,'PUBLIC RESTROOM/OUTSIDE*');
+insert into  Premisa values(707,'GARAGE/CARPORT');
+insert into  Premisa values(801,'MTA BUS');
+insert into  Premisa values(510,'NURSING/CONVALESCENT/RETIREMENT HOME');
+insert into  Premisa values(401,'MINI-MART');
+insert into  Premisa values(122,'VEHICLE, PASSENGER/TRUCK');
+insert into  Premisa values(406,'OTHER STORE');
+insert into  Premisa values(514,'GROUP HOME');
+insert into  Premisa values(900,'MTA - RED LINE - UNION STATION');
+insert into  Premisa values(210,'RESTAURANT/FAST FOOD');
+insert into  Premisa values(902,'MTA - RED LINE - PERSHING SQUARE');
+insert into  Premisa values(403,'DRUG STORE');
+insert into  Premisa values(725,'GOVERNMENT FACILITY (FEDERAL,STATE, COUNTY & CITY)');
+insert into  Premisa values(516,'SINGLE RESIDENCE OCCUPANCY (SROs) LOCATIONS');
+insert into  Premisa values(123,'PARKING UNDERGROUND/BUILDING');
+insert into  Premisa values(505,'MOTEL');
+insert into  Premisa values(701,'HOSPITAL');
+insert into  Premisa values(104,'DRIVEWAY');
+insert into  Premisa values(402,'MARKET');
+insert into  Premisa values(834,'LA UNION STATION (NOT LINE SPECIFIC)');
+insert into  Premisa values(517,'MISSIONS/SHELTERS');
+insert into  Premisa values(207,'BAR/COCKTAIL/NIGHTCLUB');
+insert into  Premisa values(151,'TOW YARD*');
+insert into  Premisa values(753,'DETENTION/JAIL FACILITY');
+insert into  Premisa values(710,'OTHER PREMISE');
+insert into  Premisa values(248,'CELL PHONE STORE');
+insert into  Premisa values(405,'CLOTHING STORE');
+insert into  Premisa values(602,'BANK');
+insert into  Premisa values(931,'MTA - BLUE LINE - 7TH AND METRO CENTER');
+insert into  Premisa values(116,'OTHER/OUTSIDE');
+insert into  Premisa values(741,'STAPLES CENTER *');
+insert into  Premisa values(118,'CONSTRUCTION SITE');
+insert into  Premisa values(719,'MEDICAL/DENTAL OFFICES');
+insert into  Premisa values(903,'MTA - RED LINE - 7TH AND METRO CENTER');
+insert into  Premisa values(202,'LIQUOR STORE');
+insert into  Premisa values(244,'TOBACCO SHOP');
+insert into  Premisa values(744,'HIGH-RISE BUILDING');
+insert into  Premisa values(802,'MUNICIPAL BUS LINE INCLUDES LADOT/DASH');
+insert into  Premisa values(504,'OTHER RESIDENCE');
+insert into  Premisa values(124,'BUS STOP');
+insert into  Premisa values(917,'MTA - PURPLE LINE - PERSHING SQUARE');
+insert into  Premisa values(201,'JEWELRY STORE');
+insert into  Premisa values(733,'BAR/SPORTS BAR (OPEN DAY & NIGHT)');
+insert into  Premisa values(738,'LIBRARY');
+insert into  Premisa values(706,'SEX ORIENTED/BOOK STORE/STRIP CLUB/GENTLEMANS CLUB');
+insert into  Premisa values(916,'MTA - PURPLE LINE - CIVIC CENTER/GRAND PARK');
+insert into  Premisa values(901,'MTA - RED LINE - CIVIC CENTER/GRAND PARK');
+insert into  Premisa values(152,'UNDERPASS/BRIDGE*');
+insert into  Premisa values(727,'SHOPPING MALL (COMMON AREA)');
+insert into  Premisa values(212,'TRANSPORTATION FACILITY (AIRPORT)');
+insert into  Premisa values(109,'PARK/PLAYGROUND');
+insert into  Premisa values(717,'HEALTH SPA/GYM');
+insert into  Premisa values(508,'FRAT HOUSE/SORORITY/DORMITORY');
+insert into  Premisa values(121,'YARD (RESIDENTIAL/BUSINESS)');
+insert into  Premisa values(119,'PORCH, RESIDENTIAL');
+insert into  Premisa values(966,'MTA - GOLD LINE - UNION STATION');
+insert into  Premisa values(218,'BEAUTY/BARBER SHOP');
+insert into  Premisa values(810,'AMTRAK TRAIN');
+insert into  Premisa values(220,'NAIL SALON');
+insert into  Premisa values(413,'FURNITURE STORE');
+insert into  Premisa values(835,'7TH AND METRO CENTER (NOT LINE SPECIFIC)');
+insert into  Premisa values(301,'GAS STATION');
+insert into  Premisa values(221,'PUBLIC STORAGE');
+insert into  Premisa values(722,'COLLEGE/JUNIOR COLLEGE/UNIVERSITY');
+insert into  Premisa values(713,'CONVENTION CENTER');
+insert into  Premisa values(222,'LAUNDROMAT');
+insert into  Premisa values(702,'OFFICE BUILDING/OFFICE');
+insert into  Premisa values(506,'ABANDONED BUILDING ABANDONED HOUSE');
+insert into  Premisa values(703,'ENTERTAINMENT/COMEDY CLUB (OTHER)');
+insert into  Premisa values(940,'MTA - EXPO LINE - 7TH AND METRO CENTER');
+insert into  Premisa values(757,'BASKETBALL COURTS');
+insert into  Premisa values(811,'OTHER RR TRAIN (UNION PAC, SANTE FE ETC');
+insert into  Premisa values(754,'MUSEUM');
+insert into  Premisa values(715,'HORSE RACING/SANTA ANITA PARK*');
+insert into  Premisa values(113,'TRUCK, COMMERICAL');
+insert into  Premisa values(106,'TUNNEL');
+insert into  Premisa values(708,'CHURCH/CHAPEL (CHANGED 03-03 FROM CHURCH/TEMPLE)');
+insert into  Premisa values(728,'ELEVATOR');
+insert into  Premisa values(235,'PHARMACY INSIDE STORE OR SUPERMARKET*');
+insert into  Premisa values(135,'MTA PROPERTY OR PARKING LOT');
+insert into  Premisa values(721,'HIGH SCHOOL');
+insert into  Premisa values(114,'TAXI');
+insert into  Premisa values(111,'BUS-CHARTER/PRIVATE');
+insert into  Premisa values(720,'JUNIOR HIGH SCHOOL');
+insert into  Premisa values(906,'MTA - RED LINE - VERMONT/BEVERLY');
+insert into  Premisa values(605,'AUTOMATED TELLER MACHINE (ATM)');
+insert into  Premisa values(904,'MTA - RED LINE - WESTLAKE/MACARTHUR PARK');
+insert into  Premisa values(216,'SWAP MEET');
+insert into  Premisa values(723,'PRIVATE SCHOOL/PRESCHOOL');
+insert into  Premisa values(138,'STAIRWELL*');
+insert into  Premisa values(110,'FREEWAY');
+insert into  Premisa values(704,'ELEMENTARY SCHOOL');
+insert into  Premisa values(907,'MTA - RED LINE - VERMONT/SANTA MONICA');
+insert into  Premisa values(243,'DIY CENTER (LOWES,HOME DEPOT,OSH,CONTRACTORS WAREHOUSE)');
+insert into  Premisa values(156,'VALET');
+insert into  Premisa values(750,'CYBERSPACE');
+insert into  Premisa values(729,'SPECIALTY SCHOOL/OTHER');
+insert into  Premisa values(217,'AUTO REPAIR SHOP');
+insert into  Premisa values(120,'STORAGE SHED');
+insert into  Premisa values(242,'DISCOUNT STORE (99 CENT,DOLLAR,ETC.');
+insert into  Premisa values(255,'AUTO DEALERSHIP (CHEVY, FORD, BMW, MERCEDES, ETC.)');
+insert into  Premisa values(145,'MAIL BOX');
+insert into  Premisa values(509,'MOBILE HOME/TRAILERS/CONSTRUCTION TRAILERS/RVS/MOTORHOME');
+insert into  Premisa values(515,'APARTMENT/CONDO COMMON LAUNDRY ROOM');
+insert into  Premisa values(946,'MTA - EXPO LINE - EXPO/WESTERN');
+insert into  Premisa values(408,'AUTO SUPPLY STORE*');
+insert into  Premisa values(232,'DELIVERY SERVICE (FED EX, UPS, COURIERS,COURIER SERVICE)*');
+insert into  Premisa values(251,'RECYCLING CENTER');
+insert into  Premisa values(947,'MTA - EXPO LINE - EXPO/CRENSHAW');
+insert into  Premisa values(949,'MTA - EXPO LINE - EXPO/LA BREA');
+insert into  Premisa values(511,'PROJECT/TENEMENT/PUBLIC HOUSING');
+insert into  Premisa values(237,'HOSPICE');
+insert into  Premisa values(518,'TRANSITIONAL HOUSING/HALFWAY HOUSE');
+insert into  Premisa values(231,'DAY CARE/CHILDREN*');
+insert into  Premisa values(247,'CAR WASH');
+insert into  Premisa values(943,'MTA - EXPO LINE - JEFFERSON/USC');
+insert into  Premisa values(712,'COLISEUM');
+insert into  Premisa values(945,'MTA - EXPO LINE - EXPO/VERMONT');
+insert into  Premisa values(944,'MTA - EXPO LINE - EXPO PARK/USC');
+insert into  Premisa values(897,'MTA - SILVER LINE - HARBOR GATEWAY TRANSIT CTR');
+insert into  Premisa values(213,'WAREHOUSE');
+insert into  Premisa values(968,'MTA - GOLD LINE - LINCOLN/CYPRESS');
+insert into  Premisa values(238,'TELECOMMUNICATION FACILITY/LOCATION');
+insert into  Premisa values(254,'STUDIO (FILM/PHOTOGRAPHIC/MUSIC)');
+insert into  Premisa values(229,'CHECK CASHING*');
+insert into  Premisa values(411,'PET STORE');
+insert into  Premisa values(146,'PATIO*');
+insert into  Premisa values(868,'MTA - ORANGE LINE - NORTH HOLLYWOOD');
+insert into  Premisa values(117,'BEACH');
+insert into  Premisa values(158,'TRANSIENT ENCAMPMENT');
+insert into  Premisa values(107,'VACANT LOT');
+insert into  Premisa values(127,'TRASH CAN/TRASH DUMPSTER');
+insert into  Premisa values(705,'SLIPS/DOCK/MARINA/BOAT');
+insert into  Premisa values(140,'BALCONY*');
+insert into  Premisa values(204,'MANUFACTURING COMPANY');
+insert into  Premisa values(211,'PAWN SHOP');
+insert into  Premisa values(236,'VISION CARE FACILITY*');
+insert into  Premisa values(249,'NURSERY/FLOWER SHOP');
+insert into  Premisa values(809,'METROLINK TRAIN');
+insert into  Premisa values(412,'ELECTRONICS STORE (IE:RADIO SHACK, ETC.)');
+insert into  Premisa values(417,'THE BEVERLY CONNECTION');
+insert into  Premisa values(415,'THE GROVE');
+insert into  Premisa values(418,'');
+insert into  Premisa values(709,'PUBLIC RESTROOM(INDOORS-INSIDE)');
+insert into  Premisa values(752,'FIRE STATION');
+insert into  Premisa values(732,'POST OFFICE');
+insert into  Premisa values(730,'SYNAGOGUE/TEMPLE');
+insert into  Premisa values(718,'MASSAGE PARLOR');
+insert into  Premisa values(208,'AUTO SALES LOT');
+insert into  Premisa values(144,'GOLF COURSE*');
+insert into  Premisa values(407,'HARDWARE/BUILDING SUPPLY');
+insert into  Premisa values(875,'MTA - ORANGE LINE - BALBOA');
+insert into  Premisa values(416,'THE BEVERLY CENTER');
+insert into  Premisa values(142,'DRIVE THRU*');
+insert into  Premisa values(233,'TATTOO PARLOR*');
+insert into  Premisa values(228,'BOWLING ALLEY*');
+insert into  Premisa values(519,'SHORT-TERM VACATION RENTAL');
+insert into  Premisa values(971,'MTA - GOLD LINE - HIGHLAND PARK');
+insert into  Premisa values(606,'DRIVE THRU BANKING (WINDOW)*');
+insert into  Premisa values(209,'EQUIPMENT RENTAL');
+insert into  Premisa values(898,'MTA - SILVER LINE - PACIFIC COAST HWY');
+insert into  Premisa values(410,'MEMBERSHIP STORE (COSTCO,SAMS CLUB)*');
+insert into  Premisa values(230,'DAY CARE/ADULTS*');
+insert into  Premisa values(885,'MTA - ORANGE LINE - CHATSWORTH');
+insert into  Premisa values(157,'VEHICLE STORAGE LOT (CARS, TRUCKS, RVS, BOATS, TRAILERS, ETC.)');
+insert into  Premisa values(141,'CEMETARY*');
+insert into  Premisa values(303,'OIL REFINERY');
+insert into  Premisa values(736,'SKATEBOARD FACILITY/SKATEBOARD PARK*');
+insert into  Premisa values(908,'MTA - RED LINE - VERMONT/SUNSET');
+insert into  Premisa values(219,'CLEANER/LAUNDROMAT');
+insert into  Premisa values(136,'OTHER INTERSTATE, CHARTER BUS');
+insert into  Premisa values(755,'VETERINARIAN/ANIMAL HOSPITAL');
+insert into  Premisa values(205,'GUN/SPORTING GOODS');
+insert into  Premisa values(112,'BUS, SCHOOL, CHURCH');
+insert into  Premisa values(239,'MEDICAL MARIJUANA FACILITIES/BUSINESSES');
+insert into  Premisa values(958,'MTA - GREEN LINE - AVIATION/LAX');
+insert into  Premisa values(934,'MTA - BLUE LINE - SAN PEDRO');
+insert into  Premisa values(751,'WEBSITE');
+insert into  Premisa values(909,'MTA - RED LINE - HOLLYWOOD/WESTERN');
+insert into  Premisa values(804,'GREYHOUND OR INTERSTATE BUS');
+insert into  Premisa values(604,'FINANCE COMPANY');
+insert into  Premisa values(603,'CREDIT UNION');
+insert into  Premisa values(913,'MTA - RED LINE - NORTH HOLLYWOOD');
+insert into  Premisa values(512,'FOSTER HOME BOYS OR GIRLS*');
+insert into  Premisa values(953,'MTA - EXPO LINE - EXPO/SEPULVEDA');
+insert into  Premisa values(716,'THEATRE/MOVIE');
+insert into  Premisa values(911,'MTA - RED LINE - HOLLYWOOD/HIGHLAND');
+insert into  Premisa values(896,'MTA - SILVER LINE - ROSECRANS');
+insert into  Premisa values(740,'OTHER PLACE OF WORSHIP');
+insert into  Premisa values(115,'AIRCRAFT');
+insert into  Premisa values(128,'BUS STOP/LAYOVER (ALSO QUERY 124)');
+insert into  Premisa values(105,'PEDESTRIAN OVERCROSSING');
+insert into  Premisa values(154,'TRAIN TRACKS');
+insert into  Premisa values(954,'MTA - EXPO LINE - EXPO/BUNDY');
+insert into  Premisa values(967,'MTA - GOLD LINE - CHINATOWN');
+insert into  Premisa values(962,'MTA - GOLD LINE - SOTO');
+insert into  Premisa values(302,'FACTORY');
+insert into  Premisa values(910,'MTA - RED LINE - HOLLYWOOD/VINE');
+insert into  Premisa values(227,'ABORTION CLINIC/ABORTION FACILITY*');
+insert into  Premisa values(149,'RIVER BED*');
+insert into  Premisa values(876,'MTA - ORANGE LINE - RESEDA');
+insert into  Premisa values(711,'ARCADE,GAME ROOM/VIDEO GAMES (EXAMPLE CHUCKIE CHEESE)*');
+insert into  Premisa values(948,'MTA - EXPO LINE - FARMDALE');
+insert into  Premisa values(234,'OPTICAL OFFICE INSIDE STORE OR SUPERMARKET*');
+insert into  Premisa values(414,'BOOK STORE');
+insert into  Premisa values(895,'MTA - SILVER LINE - HARBOR FWY');
+insert into  Premisa values(877,'MTA - ORANGE LINE - TAMPA');
+insert into  Premisa values(147,'POOL-PUBLIC/OUTDOOR OR INDOOR*');
+insert into  Premisa values(919,'MTA - PURPLE LINE - WESTLAKE/MACARTHUR PARK');
+insert into  Premisa values(607,'BANKING INSIDE MARKET-STORE *');
+insert into  Premisa values(139,'AMUSEMENT PARK*');
+insert into  Premisa values(951,'MTA - EXPO LINE - PALMS');
+insert into  Premisa values(215,'TRAIN DEPOT/TERMINAL, OTHER THAN MTA');
+insert into  Premisa values(214,'BUS DEPOT/TERMINAL, OTHER THAN MTA');
+insert into  Premisa values(742,'SPORTS VENUE, OTHER');
+insert into  Premisa values(970,'MTA - GOLD LINE - SOUTHWEST MUSEUM');
+insert into  Premisa values(155,'DAM/RESERVOIR');
+insert into  Premisa values(241,'ENERGY PLANT/FACILITY');
+insert into  Premisa values(871,'MTA - ORANGE LINE - WOODMAN');
+insert into  Premisa values(950,'MTA - EXPO LINE - LA CIENEGA/JEFFERSON');
+insert into  Premisa values(890,'MTA - SILVER LINE - UNION STATION');
+insert into  Premisa values(918,'MTA - PURPLE LINE - 7TH AND METRO CENTER');
+insert into  Premisa values(872,'MTA - ORANGE LINE - VAN NUYS');
+insert into  Premisa values(724,'TRADE SCHOOL (MEDICAL-TECHNICAL-BUSINESS)*');
+insert into  Premisa values(206,'TV/RADIO/APPLIANCE');
+insert into  Premisa values(932,'MTA - BLUE LINE - PICO');
+insert into  Premisa values(963,'MTA - GOLD LINE - MARIACHI PLAZA');
+insert into  Premisa values(961,'MTA - GOLD LINE - INDIANA');
+insert into  Premisa values(250,'COMPUTER SERVICES/REPAIRS/SALES');
+insert into  Premisa values(933,'MTA - BLUE LINE - GRAND/LATTC');
+insert into  Premisa values(964,'MTA - GOLD LINE - PICO/ALISO');
+insert into  Premisa values(253,'MORTUARY');
+insert into  Premisa values(915,'MTA - PURPLE LINE - UNION STATION');
+insert into  Premisa values(513,'ABATEMENT LOCATION');
+insert into  Premisa values(739,'SPORTS ARENA');
+insert into  Premisa values(952,'MTA - EXPO LINE - WESTWOOD/RANCHO PARK');
+insert into  Premisa values(601,'SAVINGS & LOAN');
+insert into  Premisa values(150,'TOOL SHED*');
+insert into  Premisa values(245,'CATERING/ICE CREAM TRUCK');
+insert into  Premisa values(874,'MTA - ORANGE LINE - WOODLEY');
+insert into  Premisa values(969,'MTA - GOLD LINE - HERITAGE SQ');
+insert into  Premisa values(225,'RECORD-CD MUSIC/COMPUTER GAME STORE');
+insert into  Premisa values(941,'MTA - EXPO LINE - PICO');
+insert into  Premisa values(143,'ESCALATOR*');
+insert into  Premisa values(746,'SEWAGE FACILITY/PIPE');
+insert into  Premisa values(714,'DODGER STADIUM');
+insert into  Premisa values(748,'CULTURAL SIGNIFICANCE/MONUMENT');
+insert into  Premisa values(246,'METHADONE CLINIC');
+insert into  Premisa values(125,'PAY PHONE');
+insert into  Premisa values(224,'SURPLUS SURVIVAL STORE');
+insert into  Premisa values(892,'MTA - SILVER LINE - 37TH ST/USC');
+insert into  Premisa values(891,'MTA - SILVER LINE - DOWNTOWN STREET STOPS');
+insert into  Premisa values(873,'MTA - ORANGE LINE - SEPULVEDA');
+insert into  Premisa values(942,'MTA - EXPO LINE - LATTC/ORTHO INSTITUTE');
+insert into  Premisa values(965,'MTA - GOLD LINE - LITTLE TOKYO/ARTS DISTRICT');
+insert into  Premisa values(256,'');
+insert into  Premisa values(743,'MASS GATHERING LOCATION');
+insert into  Premisa values(745,'WATER FACILITY');
+insert into  Premisa values(870,'MTA - ORANGE LINE - VALLEY COLLEGE');
+insert into  Premisa values(882,'MTA - ORANGE LINE - SHERMAN WAY');
+insert into  Premisa values(129,'TERMINAL, OTHER THAN MTA');
+insert into  Premisa values(921,'MTA - PURPLE LINE - WILSHIRE/NORMANDIE');
+insert into  Premisa values(922,'MTA - PURPLE LINE - WILSHIRE/WESTERN');
+insert into  Premisa values(905,'MTA - RED LINE - WILSHIRE/VERMONT');
+insert into  Premisa values(956,'MTA - GREEN LINE - AVALON');
+insert into  Premisa values(937,'MTA - BLUE LINE - 103RD/WATTS TOWERS');
+insert into  Premisa values(920,'MTA - PURPLE LINE - WILSHIRE/VERMONT');
+insert into  Premisa values(957,'MTA - GREEN LINE - HARBOR FWY');
+insert into  Premisa values(935,'MTA - BLUE LINE - WASHINGTON');
+insert into  Premisa values(912,'MTA - RED LINE - UNIVERSAL CITY/STUDIO CITY');
+insert into  Premisa values(936,'MTA - BLUE LINE - VERNON');
+insert into  Premisa values(880,'MTA - ORANGE LINE - CANOGA');
+insert into  Premisa values(758,'HANDBALL COURTS');
+insert into  Premisa values(884,'MTA - ORANGE LINE - NORDHOFF');
+insert into  Premisa values(608,'BANK DROP BOX/MONEY DROP-OUTSIDE OF BANK*');
+insert into  Premisa values(737,'SKATING RINK*');
+insert into  Premisa values(893,'MTA - SILVER LINE - SLAUSON');
+insert into  Premisa values(756,'MUSCLE BEACH');
+insert into  Premisa values(304,'GARMENT MANUFACTURER');
+insert into  Premisa values(869,'MTA - ORANGE LINE - LAUREL CANYON');
+insert into  Premisa values(878,'MTA - ORANGE LINE - PIERCE COLLEGE');
+insert into  Premisa values(883,'MTA - ORANGE LINE - ROSCOE');
+insert into  Premisa values(223,'VIDEO RENTAL STORE');
+insert into  Premisa values(731,'MOSQUE*');
+insert into  Premisa values(879,'MTA - ORANGE LINE - DE SOTO');
+insert into  Premisa values(137,'TRAM/STREETCAR(BOXLIKE WAG ON RAILS)*');
+insert into  Premisa values(803,'RETIRED (DUPLICATE) DO NOT USE THIS CODE');
+insert into  Premisa values(305,'CHEMICAL STORAGE/MANUFACTURING PLANT');
+insert into  Premisa values(889,'MTA - SILVER LINE - LAC/USC MEDICAL CENTER');
+insert into  Premisa values(240,'DEPT OF DEFENSE FACILITY');
+insert into  Premisa values(805,'RETIRED (DUPLICATE) DO NOT USE THIS CODE');
+insert into  Premisa values(126,'TRAIN, OTHER THAN MTA (ALSO QUERY 809/810/811)');
+insert into  Premisa values(734,'HOCKEY RINK/ICE HOCKEY');
+insert into  Premisa values(894,'MTA - SILVER LINE - MANCHESTER');
+insert into  Premisa values(836,'HARBOR FRWY STATION (NOT LINE SPECIFIC)');
+
+
+select * from Ubicacion
+delete from ubicacion
+
+insert into Ubicacion values('1100 W  39TH                         PL', NULL, 340141, 340141, 377);
+insert into Ubicacion values('700 S  HILL                         ST', NULL, 340459, 340459, 163);
+insert into Ubicacion values('200 E  6TH                          ST', NULL, 340448, 340448, 155);
+insert into Ubicacion values('5400    CORTEEN                      PL', NULL, 341685, 341685, 1543);
+insert into Ubicacion values('14400    TITUS                        ST', NULL, 342198, 342198, 1998);
+insert into Ubicacion values('700 S  BROADWAY', NULL, 340452, 340452, 163);
+insert into Ubicacion values('700 S  FIGUEROA                     ST', NULL, 340483, 340483, 161);
+insert into Ubicacion values('700    BERNARD                      ST', NULL, 340677, 340677, 101);
+insert into Ubicacion values('11900    BALBOA                       BL', NULL, 342864, 342864, 1708);
+insert into Ubicacion values('15TH', 'OLIVE', 340359, 340359, 192);
+
+
+insert into Delito values(624,'BATTERY - SIMPLE ASSAULT');
+insert into Delito values(845,'SEX OFFENDER REGISTRANT OUT OF COMPLIANCE');
+insert into Delito values(745,'VANDALISM - MISDEAMEANOR ($399 OR UNDER)');
+insert into Delito values(740,'VANDALISM - FELONY ($400 & OVER, ALL CHURCH VANDALISMS)');
+insert into Delito values(121,'RAPE, FORCIBLE');
+insert into Delito values(442,'SHOPLIFTING - PETTY THEFT ($950 & UNDER)');
+insert into Delito values(946,'OTHER MISCELLANEOUS CRIME');
+insert into Delito values(341,'THEFT-GRAND ($950.01 & OVER)EXCPT,GUNS,FOWL,LIVESTK,PROD');
+insert into Delito values(330,'BURGLARY FROM VEHICLE');
+insert into Delito values(930,'CRIMINAL THREATS - NO WEAPON DISPLAYED');
+insert into Delito values(648,'ARSON');
+insert into Delito values(626,'INTIMATE PARTNER - SIMPLE ASSAULT');
+insert into Delito values(440,'THEFT PLAIN - PETTY ($950 & UNDER)');
+insert into Delito values(354,'THEFT OF IDENTITY');
+insert into Delito values(210,'ROBBERY');
+insert into Delito values(230,'ASSAULT WITH DEADLY WEAPON, AGGRAVATED ASSAULT');
+insert into Delito values(310,'BURGLARY');
+insert into Delito values(510,'VEHICLE - STOLEN');
+insert into Delito values(420,'THEFT FROM MOTOR VEHICLE - PETTY ($950 & UNDER)');
+insert into Delito values(761,'BRANDISH WEAPON');
+insert into Delito values(236,'INTIMATE PARTNER - AGGRAVATED ASSAULT');
+insert into Delito values(662,'BUNCO, GRAND THEFT');
+insert into Delito values(350,'THEFT, PERSON');
+insert into Delito values(860,'BATTERY WITH SEXUAL CONTACT');
+insert into Delito values(480,'BIKE - STOLEN');
+insert into Delito values(623,'BATTERY POLICE (SIMPLE)');
+insert into Delito values(956,'LETTERS, LEWD  -  TELEPHONE CALLS, LEWD');
+insert into Delito values(900,'VIOLATION OF COURT ORDER');
+insert into Delito values(888,'TRESPASSING');
+insert into Delito values(331,'THEFT FROM MOTOR VEHICLE - GRAND ($950.01 AND OVER)');
+insert into Delito values(901,'VIOLATION OF RESTRAINING ORDER');
+insert into Delito values(886,'DISTURBING THE PEACE');
+insert into Delito values(421,'THEFT FROM MOTOR VEHICLE - ATTEMPT');
+insert into Delito values(647,'THROWING OBJECT AT MOVING VEHICLE');
+insert into Delito values(940,'EXTORTION');
+insert into Delito values(810,'SEX,UNLAWFUL(INC MUTUAL CONSENT, PENETRATION W/ FRGN OBJ');
+insert into Delito values(922,'CHILD STEALING');
+insert into Delito values(812,'CRM AGNST CHLD (13 OR UNDER) (14-15 & SUSP 10 YRS OLDER)');
+insert into Delito values(220,'ATTEMPTED ROBBERY');
+insert into Delito values(625,'OTHER ASSAULT');
+insert into Delito values(755,'BOMB SCARE');
+insert into Delito values(649,'DOCUMENT FORGERY / STOLEN FELONY');
+insert into Delito values(815,'SEXUAL PENETRATION W/FOREIGN OBJECT');
+insert into Delito values(251,'SHOTS FIRED AT INHABITED DWELLING');
+insert into Delito values(320,'BURGLARY, ATTEMPTED');
+insert into Delito values(850,'INDECENT EXPOSURE');
+insert into Delito values(820,'ORAL COPULATION');
+insert into Delito values(668,'EMBEZZLEMENT, GRAND THEFT ($950.01 & OVER)');
+insert into Delito values(902,'VIOLATION OF TEMPORARY RESTRAINING ORDER');
+insert into Delito values(664,'BUNCO, PETTY THEFT');
+insert into Delito values(920,'KIDNAPPING - GRAND ATTEMPT');
+insert into Delito values(343,'SHOPLIFTING-GRAND THEFT ($950.01 & OVER)');
+insert into Delito values(437,'RESISTING ARREST');
+insert into Delito values(753,'DISCHARGE FIREARMS/SHOTS FIRED');
+insert into Delito values(928,'THREATENING PHONE CALLS/LETTERS');
+insert into Delito values(910,'KIDNAPPING');
+insert into Delito values(760,'LEWD/LASCIVIOUS ACTS WITH CHILD');
+insert into Delito values(762,'LEWD CONDUCT');
+insert into Delito values(661,'UNAUTHORIZED COMPUTER ACCESS');
+insert into Delito values(351,'PURSE SNATCHING');
+insert into Delito values(821,'SODOMY/SEXUAL CONTACT B/W PENIS OF ONE PERS TO ANUS OTH');
+insert into Delito values(237,'CHILD NEGLECT (SEE 300 W.I.C.)');
+insert into Delito values(903,'CONTEMPT OF COURT');
+insert into Delito values(813,'CHILD ANNOYING (17YRS & UNDER)');
+insert into Delito values(666,'BUNCO, ATTEMPT');
+insert into Delito values(627,'CHILD ABUSE (PHYSICAL) - SIMPLE ASSAULT');
+insert into Delito values(805,'PIMPING');
+insert into Delito values(763,'STALKING');
+insert into Delito values(441,'THEFT PLAIN - ATTEMPT');
+insert into Delito values(122,'RAPE, ATTEMPTED');
+insert into Delito values(443,'SHOPLIFTING - ATTEMPT');
+insert into Delito values(450,'THEFT FROM PERSON - ATTEMPT');
+insert into Delito values(434,'FALSE IMPRISONMENT');
+insert into Delito values(410,'BURGLARY FROM VEHICLE, ATTEMPTED');
+insert into Delito values(890,'FAILURE TO YIELD');
+insert into Delito values(520,'VEHICLE - ATTEMPT STOLEN');
+insert into Delito values(670,'EMBEZZLEMENT, PETTY THEFT ($950 & UNDER)');
+insert into Delito values(951,'DEFRAUDING INNKEEPER/THEFT OF SERVICES, $950 & UNDER');
+insert into Delito values(660,'COUNTERFEIT');
+insert into Delito values(654,'CREDIT CARDS, FRAUD USE ($950 & UNDER');
+insert into Delito values(352,'PICKPOCKET');
+insert into Delito values(250,'SHOTS FIRED AT MOVING VEHICLE, TRAIN OR AIRCRAFT');
+insert into Delito values(110,'CRIMINAL HOMICIDE');
+insert into Delito values(933,'PROWLER');
+insert into Delito values(652,'DOCUMENT WORTHLESS ($200 & UNDER)');
+insert into Delito values(950,'DEFRAUDING INNKEEPER/THEFT OF SERVICES, OVER $950.01');
+insert into Delito values(231,'ASSAULT WITH DEADLY WEAPON ON POLICE OFFICER');
+insert into Delito values(345,'DISHONEST EMPLOYEE - GRAND THEFT');
+insert into Delito values(822,'HUMAN TRAFFICKING - COMMERCIAL SEX ACTS');
+insert into Delito values(814,'CHILD PORNOGRAPHY');
+insert into Delito values(932,'PEEPING TOM');
+insert into Delito values(622,'BATTERY ON A FIREFIGHTER');
+insert into Delito values(471,'TILL TAP - PETTY ($950 & UNDER)');
+insert into Delito values(235,'CHILD ABUSE (PHYSICAL) - AGGRAVATED ASSAULT');
+insert into Delito values(470,'TILL TAP - GRAND THEFT ($950.01 & OVER)');
+insert into Delito values(921,'HUMAN TRAFFICKING - INVOLUNTARY SERVITUDE');
+insert into Delito values(906,'FIREARMS RESTRAINING ORDER (FIREARMS RO)');
+insert into Delito values(433,'DRIVING WITHOUT OWNER CONSENT (DWOC)');
+insert into Delito values(651,'DOCUMENT WORTHLESS ($200.01 & OVER)');
+insert into Delito values(943,'CRUELTY TO ANIMALS');
+insert into Delito values(653,'CREDIT CARDS, FRAUD USE ($950.01 & OVER)');
+insert into Delito values(436,'LYNCHING - ATTEMPTED');
+insert into Delito values(439,'FALSE POLICE REPORT');
+insert into Delito values(806,'PANDERING');
+insert into Delito values(949,'ILLEGAL DUMPING');
+insert into Delito values(522,'VEHICLE, STOLEN - OTHER (MOTORIZED SCOOTERS, BIKES, ETC)');
+insert into Delito values(446,'PETTY THEFT - AUTO REPAIR');
+insert into Delito values(113,'MANSLAUGHTER, NEGLIGENT');
+insert into Delito values(438,'RECKLESS DRIVING');
+insert into Delito values(451,'PURSE SNATCHING - ATTEMPT');
+insert into Delito values(485,'BIKE - ATTEMPTED STOLEN');
+insert into Delito values(944,'CONSPIRACY');
+insert into Delito values(954,'CONTRIBUTING');
+insert into Delito values(756,'WEAPONS POSSESSION/BOMBING');
+insert into Delito values(942,'BRIBERY');
+insert into Delito values(487,'BOAT - STOLEN');
+insert into Delito values(473,'THEFT, COIN MACHINE - GRAND ($950.01 & OVER)');
+insert into Delito values(347,'GRAND THEFT / INSURANCE FRAUD');
+insert into Delito values(435,'LYNCHING');
+insert into Delito values(880,'DISRUPT SCHOOL');
+insert into Delito values(444,'DISHONEST EMPLOYEE - PETTY THEFT');
+insert into Delito values(475,'THEFT, COIN MACHINE - ATTEMPT');
+insert into Delito values(474,'THEFT, COIN MACHINE - PETTY ($950 & UNDER)');
+insert into Delito values(931,'REPLICA FIREARMS(SALE,DISPLAY,MANUFACTURE OR DISTRIBUTE)');
+insert into Delito values(865,'DRUGS, TO A MINOR');
+insert into Delito values(349,'GRAND THEFT / AUTO REPAIR');
+insert into Delito values(452,'PICKPOCKET, ATTEMPT');
+insert into Delito values(353,'DRUNK ROLL');
+insert into Delito values(870,'CHILD ABANDONMENT');
+insert into Delito values(924,'TELEPHONE PROPERTY - DAMAGE');
+insert into Delito values(840,'BEASTIALITY, CRIME AGAINST NATURE SEXUAL ASSLT WITH ANIM');
+insert into Delito values(948,'BIGAMY');
+insert into Delito values(884,'FAILURE TO DISPERSE');
+insert into Delito values(904,'FIREARMS EMERGENCY PROTECTIVE ORDER (FIREARMS EPO)');
+insert into Delito values(830,'INCEST (SEXUAL ACTS BETWEEN BLOOD RELATIVES)');
+insert into Delito values(432,'BLOCKING DOOR INDUCTION CENTER');
+insert into Delito values(882,'INCITING A RIOT');
+insert into Delito values(445,'DISHONEST EMPLOYEE ATTEMPTED THEFT');
