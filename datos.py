@@ -1,27 +1,78 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Oct 27 09:32:29 2023
+Created on Sat Nov 11 19:16:07 2023
 
 @author: sebastianpedraza
 """
 
-import pandas as pd
+import psycopg2
+from psycopg2 import sql
+from prettytable import PrettyTable
 
+class BaseDeDatos:
+    def __init__(self, db_params):
+        self.db_params = db_params
+        self.connection = None
+        self.cursor = None
 
+    def conectar(self):
+        try:
+            self.connection = psycopg2.connect(**self.db_params)
+            self.cursor = self.connection.cursor()
+        except Exception as e:
+            print(f"Error al conectar a la base de datos: {e}")
+            raise
 
-df = pd.read_csv('baseinicial..csv')
+    def ejecutar_consulta(self, tabla):
+        try:
+            query = sql.SQL("SELECT * FROM {}").format(sql.Identifier(tabla))
+            self.cursor.execute(query)
+            data = self.cursor.fetchall()
 
+            # Crear una tabla bonita
+            table = PrettyTable()
+            table.field_names = [desc[0] for desc in self.cursor.description]
+            table.add_rows(data)
 
-def ct(df, args):
-    primary_key = df[[x for x in args[:-1]]].drop_duplicates()
-    df = primary_key.set_index(args[0])
-    df.to_excel(args[-1])
+            # Imprimir la tabla
+            print(f"\nDatos de la tabla {tabla}:")
+            print(table)
+        except Exception as e:
+            print(f"Error al ejecutar la consulta: {e}")
+            raise
 
+    def cerrar_conexion(self):
+        if self.connection:
+            self.cursor.close()
+            self.connection.close()
 
-ct(df, ('AREA', 'AREA NAME', 'Areas.xlsx' ))
-ct(df,('Weapon Used Cd', 'Weapon Desc', 'Armas.xlsx' ))
-ct(df,('LOCATION', 'Cross Street','LAT', 'LAT','Rpt Dist No', 'Ubicacion.xlsx' ))
-ct(df, ('Status', 'Status Desc', 'Estado.xlsx'))
-ct(df, ('Premis Cd','Premis Desc' ,'Premisa.xlsx'))
-ct(df, ('Crm Cd','Crm Cd Desc','Delito.xlsx'))
+if __name__ == "__main__":
+    # Parámetros de conexión
+    db_params = {
+        'dbname': 'nombre de la base',
+        'user': 'usuario',
+        'password': 'contraseña',
+        'host': 'host',
+        'port': 'puerto',
+    }
+
+    tablas = ['Caso', 'Estado', 'Area', 'Crimen', 'Arma', 'Premisa', 'Ubicacion', 'Delito', 'Delito_asociado', 'Victima']
+
+    try:
+        # Crear una instancia de la clase BaseDeDatos
+        base_datos = BaseDeDatos(db_params)
+
+        # Conectar a la base de datos
+        base_datos.conectar()
+
+        # Consultar y mostrar datos de cada tabla
+        for tabla in tablas:
+            base_datos.ejecutar_consulta(tabla)
+
+    except Exception as e:
+        print(f"Error: {e}")
+
+    finally:
+        # Cerrar la conexión de manera segura
+        base_datos.cerrar_conexion() if 'base_datos' in locals() else None
