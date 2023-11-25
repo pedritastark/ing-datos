@@ -26,16 +26,14 @@ class BaseDeDatos:
 
     def ejecutar_consulta(self, tabla):
         try:
-            query = sql.SQL("SELECT * FROM {}").format(sql.Identifier(tabla))
+            query = sql.SQL("SELECT * FROM {} LIMIT 5").format(sql.Identifier(tabla))            
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-
-            # Crear una tabla bonita
+            
             table = PrettyTable()
             table.field_names = [desc[0] for desc in self.cursor.description]
             table.add_rows(data)
 
-            # Imprimir la tabla
             print(f"\nDatos de la tabla {tabla}:")
             print(table)
         except Exception as e:
@@ -50,20 +48,17 @@ class BaseDeDatos:
 if __name__ == "__main__":
     # Parámetros de conexión
     db_params = {
-        'dbname': 'nombre de la base',
-        'user': 'usuario',
-        'password': 'contraseña',
-        'host': 'host',
-        'port': 'puerto',
+        'dbname': 'ProyectoDatos',
+        'user': 'postgres',
+        'password': 'J19f15G11a08',
+        'host': 'localhost',
+        'port': '5433',
     }
 
-    tablas = ['Caso', 'Estado', 'Area', 'Crimen', 'Arma', 'Premisa', 'Ubicacion', 'Delito', 'Delito_asociado', 'Victima']
-
+    tablas = ['casos', 'estado', 'area', 'crimen', 'arma', 'premisa', 'ubicacion', 'delito', 'delitos_asociados', 'victima']
     try:
         # Crear una instancia de la clase BaseDeDatos
         base_datos = BaseDeDatos(db_params)
-
-        # Conectar a la base de datos
         base_datos.conectar()
 
         # Consultar y mostrar datos de cada tabla
@@ -74,5 +69,4 @@ if __name__ == "__main__":
         print(f"Error: {e}")
 
     finally:
-        # Cerrar la conexión de manera segura
         base_datos.cerrar_conexion() if 'base_datos' in locals() else None
